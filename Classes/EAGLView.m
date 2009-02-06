@@ -134,13 +134,14 @@ static int __camera_callbackHook(CameraDeviceRef cameraDevice, int a, CoreSurfac
 }
 
 - (void)drawRectSize:(float)size {
+	// Front face is specified the counter-clockwise order of the first 3 vertices
 	GLfloat vertices[] = {
-		size/2, size/2,
-		-size/2, size/2,
+		-size/2, -size/2,
 		size/2, -size/2,
-		-size/2, -size/2
-    };  
-	
+		-size/2, size/2,
+		size/2, size/2
+    };
+
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
     glEnableClientState(GL_VERTEX_ARRAY);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

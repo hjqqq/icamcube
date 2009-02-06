@@ -6,7 +6,7 @@
 #import "SurfaceAccelerator.h"
 #import "glu.h"
 
-#define USE_DEPTH_BUFFER 0
+#define USE_DEPTH_BUFFER 1
 
 // A class extension to declare private methods
 @interface EAGLView ()
@@ -135,63 +135,64 @@ static int __camera_callbackHook(CameraDeviceRef cameraDevice, int a, CoreSurfac
 
 - (void)drawRectSize:(float)size {
 	GLfloat vertices[] = {
-		-size/2, -size/2,
-		size/2, -size/2,
+		size/2, size/2,
 		-size/2, size/2,
-		size/2, size/2
+		size/2, -size/2,
+		-size/2, -size/2
     };  
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glEnableClientState(GL_VERTEX_ARRAY);    
+    glEnableClientState(GL_VERTEX_ARRAY);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 - (void)drawCubeSize:(float)size {
 	// Front
+	glPushMatrix();
 	glColor4ub(255, 255, 255, 255);
-	glPushMatrix();
-	glTranslatef(0, 0, -size/2);
-	[self drawRectSize:size];
-	glPopMatrix();
-
-	// Back
-	glColor4ub(0, 255, 0, 127);
-	glPushMatrix();
 	glTranslatef(0, 0, size/2);
 	[self drawRectSize:size];
 	glPopMatrix();
 
-	// Left
-	glColor4ub(0, 0, 255, 127);
+	// Back	
 	glPushMatrix();
+	glColor4ub(0, 255, 0, 127);
+	glTranslatef(0, 0, -size/2);
+	glRotatef(180, 0, 1, 0);
+	[self drawRectSize:size];
+	glPopMatrix();
+
+	// Left
+	glPushMatrix();
+	glColor4ub(0, 0, 255, 127);
 	glTranslatef(-size/2, 0, 0);
 	glRotatef(-90, 0, 1, 0);
 	[self drawRectSize:size];
 	glPopMatrix();
 	
 	// Right
-	glColor4ub(255, 255, 0, 127);
 	glPushMatrix();
+	glColor4ub(255, 255, 0, 127);
 	glTranslatef(size/2, 0, 0);
 	glRotatef(90, 0, 1, 0);
 	[self drawRectSize:size];
 	glPopMatrix();
 
 	// Top
-	glColor4ub(0, 255, 255, 127);
 	glPushMatrix();
-	glTranslatef(0, -size/2, 0);
+	glColor4ub(0, 255, 255, 127);
+	glTranslatef(0, size/2, 0);
 	glRotatef(-90, 1, 0, 0);
 	[self drawRectSize:size];
 	glPopMatrix();
 	
 	// Bottom
-	glColor4ub(255, 0, 255, 127);
 	glPushMatrix();
-	glTranslatef(0, size/2, 0);
+ 	glColor4ub(255, 0, 255, 127);
+	glTranslatef(0, -size/2, 0);
 	glRotatef(90, 1, 0, 0);
 	[self drawRectSize:size];
-	glPopMatrix();	
+	glPopMatrix();
 }
 
 - (void)drawView {
@@ -204,6 +205,8 @@ static int __camera_callbackHook(CameraDeviceRef cameraDevice, int a, CoreSurfac
     glViewport(0, 0, backingWidth, backingHeight);
 	glClearColor(255, 255, 255, 255);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_CULL_FACE);
 	
 	static BOOL textureInitialized = NO;
 	if (!textureInitialized) {
@@ -213,9 +216,10 @@ static int __camera_callbackHook(CameraDeviceRef cameraDevice, int a, CoreSurfac
 	
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60, (GLfloat) backingWidth/backingHeight, -10, 10);
-	gluLookAt(0, 0, -1, 0, 0, 0, 0, 1, 0);
-	
+	glOrthof(-1, 1, (float) -backingHeight/backingWidth, (float) backingHeight/backingWidth, -1, 1);
+    //gluPerspective(60, (GLfloat) backingHeight/backingWidth, -10, 10);
+	//gluLookAt(0, 0, -1, 0, 0, 0, 0, 1, 0);
+
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	static float rx = 0, ry = 0, rz = 0;
@@ -225,7 +229,7 @@ static int __camera_callbackHook(CameraDeviceRef cameraDevice, int a, CoreSurfac
 	glRotatef(rz, 0, 0, 1);
     
 	[self setTexture];
-	[self drawCubeSize:1];
+	[self drawCubeSize:1.2];
 
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];

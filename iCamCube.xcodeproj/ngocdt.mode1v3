@@ -328,7 +328,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E2EA1F4F0F3CA27600176C5C</string>
+										<string>E276BC380F3CA309008A8CA4</string>
 										<key>history</key>
 										<array>
 											<string>E2C77ED60F3C261F001643C4</string>
@@ -343,7 +343,7 @@
 											<string>E27890000F3CA0D600B1B393</string>
 											<string>E27890010F3CA0D600B1B393</string>
 											<string>E27890020F3CA0D600B1B393</string>
-											<string>E27890080F3CA0D600B1B393</string>
+											<string>E2EA1F4F0F3CA27600176C5C</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -417,9 +417,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>E2EA1F500F3CA27600176C5C</string>
+				<string>E276BC390F3CA309008A8CA4</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>E2EA1F510F3CA27600176C5C</string>
+				<string>E276BC3A0F3CA309008A8CA4</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -553,11 +553,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E2EA1F5A0F3CA27600176C5C</string>
-		<string>E2EA1F5B0F3CA27600176C5C</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>E26592B10F3C18BF00FDE2FC</string>
 		<string>/Users/ngocdt/plain_workspace/icamcube/iCamCube.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

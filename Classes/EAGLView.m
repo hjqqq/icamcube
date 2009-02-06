@@ -148,6 +148,10 @@ static int __camera_callbackHook(CameraDeviceRef cameraDevice, int a, CoreSurfac
 }
 
 - (void)drawCubeSize:(float)size {
+	// Rotation:
+	// * Let the vector's head point at your face
+	// * The +direction is counter-clockwise
+	
 	// Front
 	glPushMatrix();
 	glColor4ub(255, 255, 255, 255);
